@@ -17,11 +17,19 @@
   <section class="panel panel--evidence">
     <div class="panel__head"><h2>证据</h2><span class="panel__meta">2 条</span></div>
     <div class="panel__body"><div class="evidence"><b>RUN-660-1</b><span>LINE 2</span><code>/api/legs/import</code></div><pre id="result">等待运行</pre></div>
+    <div class="panel__body">
+      <label for="csv">真实航段 CSV</label>
+      <input id="csv" type="file" accept=".csv,text/csv">
+      <p class="panel__meta">上传后按物理行号采信并落库；同一内容重复导入复用批次。</p>
+    </div>
   </section>
   <section class="panel panel--status">
     <div class="panel__head"><h2>原因分布</h2><span class="panel__meta">1 类</span></div>
     <div class="panel__body"><div class="bar"><i style="width:55%"></i></div><div class="legend"><span>采纳 14</span><span>隔离 1</span></div></div>
   </section>
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/m1.js"></script>
 {% endblock %}
 

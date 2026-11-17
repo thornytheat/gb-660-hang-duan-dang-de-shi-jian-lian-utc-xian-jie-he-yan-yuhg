@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block action %}
+<button class="btn btn--primary" id="rev-run">预演并执行</button>
+{% endblock %}
+{% block content %}
+<section class="kpis">
+  <div class="kpi"><b>批次</b><strong id="kpi-batches">—</strong><small>个</small></div>
+  <div class="kpi"><b>撤销</b><strong id="kpi-revoke">—</strong><small>条</small></div>
+  <div class="kpi"><b>待裁决</b><strong id="kpi-adjudicate">—</strong><small>条</small></div>
+  <div class="kpi"><b>保留</b><strong id="kpi-retain">—</strong><small>条</small></div>
+</section>
+<div class="grid grid--split">
+  <section class="panel">
+    <div class="panel__head"><h2>批次撤销</h2><span class="state state--ok" id="state">就绪</span></div>
+    <div class="panel__body panel__body--scroll">
+      <table class="ledger"><thead><tr><th>序号</th><th>业务键</th><th>状态</th><th class="num">值</th></tr></thead>
+      <tbody>{% for row in rows %}<tr><td class="num">{{ loop.index }}</td><td>{{ row.key }}</td><td>{{ row.status }}</td><td class="num">{{ row.value }}</td></tr>{% endfor %}</tbody></table>
+    </div>
+  </section>
+  <section class="panel panel--evidence">
+    <div class="panel__head"><h2>证据</h2><span class="panel__meta" id="kpi-imports">预演 · 裁决 · 执行</span></div>
+    <div class="panel__body"><div class="evidence"><b>REVOKE</b><span>按航段来源</span><code>/api/revocations</code></div><pre id="result">等待运行</pre></div>
+  </section>
+  <section class="panel panel--status">
+    <div class="panel__head"><h2>守恒</h2><span class="panel__meta" id="balance-label">—</span></div>
+    <div class="panel__body"><div class="bar"><i id="balance-bar" style="width:0%"></i></div><div class="legend"><span id="before">执行前 —</span><span id="after">执行后 —</span></div></div>
+  </section>
+</div>
+<div class="panel">
+  <div class="panel__head"><h2>待裁决</h2><span class="panel__meta" id="open-count">0 条</span></div>
+  <div class="panel__body panel__body--scroll">
+    <table class="ledger"><thead><tr><th>业务键</th><th>候选版本</th><th>裁决</th></tr></thead>
+    <tbody id="cases"></tbody></table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/m7.js"></script>
+{% endblock %}

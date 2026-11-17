@@ -29,3 +29,5 @@ target/
 *.o
 *.obj
 .DS_Store
+
+data/

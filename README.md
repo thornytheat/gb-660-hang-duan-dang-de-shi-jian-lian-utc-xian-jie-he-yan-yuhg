@@ -16,6 +16,19 @@ docker compose up --build
 - M4 UTC 航链：页面 /itineraries，接口 /api/itineraries/build
 - M5 衔接判定：页面 /connections，接口 /api/connections/check
 - M6 批次导出：页面 /batches，接口 /api/reconcile
+- M7 批次撤销：页面 /revocations，接口 /api/revocations
+
+## 批次撤销
+
+误导入批次通过来源撤回，不影响后续批次确认的独立航段。
+
+1. `POST /api/legs/import` 接受真实 CSV（`content-type: text/csv`）或 JSON `{"rows": [...]}` / `{"csv": "..."}`，按物理行号落库并保留隔离证据。
+2. `POST /api/revocations/batches/{batch_id}/preview` 生成预演：逐航段判定 `REVOKE`、`RESTORE`、`RETAIN` 或 `ADJUDICATE`，并记录代次、导入代数与数据集摘要。
+3. `GET /api/revocations/adjudications?batch_id=…` 查看两版并存的待裁决项；`POST /api/revocations/adjudications/{id}/resolve` 以 `KEEP_SOURCE`、`KEEP_LATER`、`DEFER` 裁决。
+4. `POST /api/revocations/previews/{preview_id}/execute` 执行；中断后 `POST /api/revocations/jobs/{job_id}/retry` 从断点续跑且不重复撤销。
+5. `GET /api/revocations/jobs/{job_id}` 回读撤销、恢复、保留、待裁决航段与守恒差异；`GET /api/revocations/chain?generation=…` 可读切换前的旧航链。
+
+预演后有新导入，执行会返回 `PREVIEW_STALE` 并要求重新预演。撤销在独立代次中构建，完成后一次性原子切换并重算 UTC 航链与衔接。
 
 ## 运行规则
 
