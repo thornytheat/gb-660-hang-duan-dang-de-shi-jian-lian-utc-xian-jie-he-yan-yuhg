@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>{{ title }} · 航班时刻运行台</title>
+  <link rel="stylesheet" href="/static/theme.css">
+  <link rel="stylesheet" href="/static/layout.css">
+  <link rel="stylesheet" href="/static/components.css">
+</head>
+<body class="ops-shell" data-endpoint="{{ endpoint }}">
+<div class="app">
+  <aside class="rail">
+    <a class="rail__brand" href="/">FLIGHT CLOCK</a>
+    <nav class="rail__nav">
+<a class="rail__item" href="/legs"><span>01</span>航段采信</a>
+<a class="rail__item" href="/airports"><span>02</span>机场时区</a>
+<a class="rail__item" href="/local-time"><span>03</span>当地时刻</a>
+<a class="rail__item" href="/itineraries"><span>04</span>UTC 航链</a>
+<a class="rail__item" href="/connections"><span>05</span>衔接判定</a>
+<a class="rail__item" href="/batches"><span>06</span>批次导出</a>
+    </nav>
+    <div class="rail__foot">{{ version }}<br>RUN READY</div>
+  </aside>
+  <div class="work">
+    <header class="topbar">
+      <strong>{{ title }}</strong>
+      <span class="topbar__meta">RUN-20261116 · ASIA/SHANGHAI</span>
+      <button class="btn btn--primary" id="run">运行样例</button>
+    </header>
+    <main class="content">{% block content %}{% endblock %}</main>
+    <footer class="statusbar"><span>UTC 基准 · 航班日边界</span><span id="feedback">就绪</span></footer>
+  </div>
+</div>
+<script src="/static/app.js"></script>
+<script src="/static/table.js"></script>
+</body>
+</html>
+

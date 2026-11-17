@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="kpis">
+  <div class="kpi"><b>航段</b><strong>9</strong><small>条</small></div>
+  <div class="kpi"><b>通过</b><strong>7</strong><small>条</small></div>
+  <div class="kpi"><b>隔离</b><strong>1</strong><small>条</small></div>
+  <div class="kpi"><b>规则版</b><strong>1.4</strong><small>v</small></div>
+</section>
+<div class="grid grid--split">
+  <section class="panel">
+    <div class="panel__head"><h2>UTC 航链</h2><span class="state state--ok">通过</span></div>
+    <div class="panel__body panel__body--scroll">
+      <table class="ledger"><thead><tr><th>序号</th><th>业务键</th><th>状态</th><th class="num">值</th></tr></thead>
+      <tbody>{% for row in rows %}<tr><td class="num">{{ loop.index }}</td><td>{{ row.key }}</td><td>{{ row.status }}</td><td class="num">{{ row.value }}</td></tr>{% endfor %}</tbody></table>
+    </div>
+  </section>
+  <section class="panel panel--evidence">
+    <div class="panel__head"><h2>证据</h2><span class="panel__meta">5 条</span></div>
+    <div class="panel__body"><div class="evidence"><b>RUN-660-4</b><span>LINE 5</span><code>/api/itineraries/build</code></div><pre id="result">等待运行</pre></div>
+  </section>
+  <section class="panel panel--status">
+    <div class="panel__head"><h2>原因分布</h2><span class="panel__meta">1 类</span></div>
+    <div class="panel__body"><div class="bar"><i style="width:73%"></i></div><div class="legend"><span>采纳 9</span><span>隔离 1</span></div></div>
+  </section>
+</div>
+{% endblock %}
+

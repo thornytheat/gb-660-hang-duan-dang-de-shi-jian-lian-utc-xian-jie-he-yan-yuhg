@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "18219:8000"
+    environment:
+      APP_VERSION: "FC-2026.11"
+      DATABASE_PATH: "/app/data/runs.sqlite3"
+      TZ: "Asia/Shanghai"
+    volumes:
+      - run-data:/app/data
+volumes:
+  run-data:
+
